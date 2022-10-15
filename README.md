@@ -10,6 +10,7 @@ npm install express-generator -g
 express –view=ejs saboroso
 npm install mysql2 --save
 npm install nodemon --save
+npm install formidable --save
 ```
 
 Na pasta public/admin, insira no terminal: 

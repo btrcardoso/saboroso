@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var formidable = require('formidable');
 require('dotenv').config();
 
 // connect-redis setup
@@ -16,6 +17,33 @@ var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
 
 var app = express();
+
+
+app.use(function(req, res, next){
+
+  if(req.method === 'POST'){
+
+    // upload of the forms
+    // __dirname: folder where the app is running 
+    var form = formidable({
+      uploadDir: path.join(__dirname, "/public/images"),
+      keepExtensions: true
+    });
+
+    form.parse(req, function(err, fields, files){
+
+      req.fields = fields;
+      req.files = files;
+      next();
+
+    });
+
+  } else {
+    next();
+  }
+
+});
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
