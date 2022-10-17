@@ -21,7 +21,9 @@ var app = express();
 
 app.use(function(req, res, next){
 
-  if(req.method === 'POST'){
+  console.log(req.url);
+
+  if(req.method === 'POST' && req.url !== '/admin/login'){
 
     // upload of the forms
     // __dirname: folder where the app is running 
