@@ -204,4 +204,31 @@
 
   });
 
+  [...document.querySelectorAll('.btn-delete')].forEach(btn => {
+
+    btn.addEventListener('click', e => {
+
+      // find the first tr where the button "Excluir" is inside
+      let tr = e.composedPath().find(el => {
+        return (el.tagName.toUpperCase() === 'TR');
+      });
+
+      let data = JSON.parse(tr.dataset.row);
+
+      if(confirm(`Deseja realmente excluir o menu ${data.title}?`)){
+
+        fetch(`/admin/menus/${data.id}`, {
+          method: 'DELETE'
+        })
+          .then(response => response.json())
+          .then(json => {
+            window.location.reload();
+          });
+
+      }
+
+    });
+
+  });
+
 </script>
