@@ -74,16 +74,24 @@ module.exports = {
 
     },
     
-    getReservations(page){
+    getReservations(page, dtstart, dtend){
 
         if(!page) page = 1;
 
-        let firstId = page
+        let params = []
+
+        if(dtstart && dtend){
+            params.push(dtstart, dtend);
+        }
         
         // LIMIT 0,10 : //A PARTIR DA POSIÇÃO 0 TRAGA 10 REGISTROS
         let pag = new Pagination(`
-                SELECT SQL_CALC_FOUND_ROWS * FROM tb_reservations ORDER BY date DESC LIMIT ?, ? 
-            `);
+                SELECT SQL_CALC_FOUND_ROWS * 
+                FROM tb_reservations
+                ${(dtstart && dtend) ? 'WHERE date BETWEEN ? AND ? ' : ''}
+                ORDER BY name
+                DESC LIMIT ?, ? 
+            `,params);
 
         return pag.getPage(page);
 
