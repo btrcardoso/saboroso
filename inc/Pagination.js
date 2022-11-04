@@ -55,6 +55,15 @@ class Pagination {
         return this.totalPages;
     }
 
+    getNavigation(params){
+        let limitPagesNav = 5;
+        let links = [];
+        let nrstart = 0;
+        let nrend = 0;
+
+        return links;
+    }
+
 }
 
 module.exports = Pagination;
