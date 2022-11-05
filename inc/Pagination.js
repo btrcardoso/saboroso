@@ -61,6 +61,35 @@ class Pagination {
         let nrstart = 0;
         let nrend = 0;
 
+        if(this.getTotalPages() < limitPagesNav){
+            limitPagesNav = this.getTotalPages();
+        }
+
+        // Primeiras páginas
+
+        if((this.getCurrentPage() - parseInt(limitPagesNav/2)) < 1){
+            nrstart = 1;
+            nrend = limitPagesNav;
+        } 
+        
+        // chegando nas últimas páginas
+        else if((this.getCurrentPage() + parseInt(limitPagesNav/1)) > this.getTotalPages()){
+            nrstart = this.getTotalPages() - limitPagesNav;
+            nrend = this.getTotalPages();
+        } else {
+            nrstart = this.getCurrentPage() - parseInt(limitPagesNav/2);
+            nrend = this.getCurrentPage() + parseInt(limitPagesNav/2);
+        }
+
+        for (let x = nrstart; x<=nrend; x++){
+
+            links.push({
+                text: x,
+                href: `?page=${x}`
+            })
+
+        }
+
         return links;
     }
 
