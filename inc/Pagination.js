@@ -85,12 +85,27 @@ class Pagination {
 
             links.push({
                 text: x,
-                href: `?page=${x}`
+                href: '?' + this.getQueryString( Object.assign({}, params, {page:x}) ),
+                active: (x === this.getCurrentPage())
             })
 
         }
 
         return links;
+    }
+
+    getQueryString(params){
+
+        let queryString = [];
+
+        for (let name in params){
+
+            queryString.push(`${name}=${params[name]}`);
+
+        }
+
+        return queryString.join("&");
+
     }
 
 }
