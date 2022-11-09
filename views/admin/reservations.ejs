@@ -238,15 +238,7 @@
     {
       type: 'line', // grafico de linha
       data: {
-        labels: ['Jan', 'Feb','Mar'], // linhas
-        datasets: [{
-          data: [1,2,1], //colunas
-          label: 'Reservas',
-          backgroundColor: 'rgb(54,162,235)',
-          borderColor: 'rgb(54,162,235)',
-          fill: true,
-          pointBackgroundColor:'#FFF'
-        }]
+
       },
       options:{
         tooltips:{
@@ -270,6 +262,26 @@
       }
     }
   ); 
+
+  fetch(`/admin/reservations/chart${window.location.search}`)
+    .then(response=>response.json())
+    .then(json=>{
+      
+      grafico.data = {
+        labels: json.months, //linhas
+        datasets: [{
+          data: json.values, //colunas
+          label: 'Reservas',
+          backgroundColor: 'rgb(54,162,235)',
+          borderColor: 'rgb(54,162,235)',
+          fill: true,
+          pointBackgroundColor:'#FFF'
+        }]
+      };
+
+      grafico.update();
+
+    })
 
 </script>
 
